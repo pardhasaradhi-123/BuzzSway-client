@@ -3,7 +3,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 
 const API = axios.create({
-  baseURL: "https://buzzsway.netlify.app/api",
+  baseURL: "https://buzzsway-server-production.up.railway.app/api",
   withCredentials: true, // optional: for sending cookies
 });
 

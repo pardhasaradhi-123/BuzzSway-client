@@ -12,7 +12,7 @@ const ProfilePage = () => {
   const navigate = useNavigate();
 
   const backendUrl =
-    process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+    process.env.REACT_APP_BACKEND_URL || "https://buzzsway.netlify.app";
 
   const [profile, setProfile] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);

@@ -1,7 +1,7 @@
 // src/services/messageService.js
 import axios from "axios";
 
-const API_URL = "http://localhost:5000/api/messages";
+const API_URL = "https://buzzsway.netlify.app/api/messages";
 
 export const saveGroupMessage = async (message) => {
   try {

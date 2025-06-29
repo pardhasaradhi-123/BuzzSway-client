@@ -9,7 +9,7 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
   const [likeLoading, setLikeLoading] = useState(false);
 
   const backendUrl =
-    process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+    process.env.REACT_APP_BACKEND_URL || "https://buzzsway.netlify.app";
 
   const handleLike = async () => {
     try {

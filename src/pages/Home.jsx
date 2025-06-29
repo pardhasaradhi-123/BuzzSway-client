@@ -15,7 +15,7 @@ const Home = () => {
   const { user: currentUser } = useContext(AuthContext);
 
   const backendUrl =
-    process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+    process.env.REACT_APP_BACKEND_URL || "https://buzzsway.netlify.app";
 
   const fetchPosts = async () => {
     try {

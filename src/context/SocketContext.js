@@ -9,8 +9,10 @@ export const SocketProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    const newSocket = io("https://buzzsway.netlify.app", {
+    // ✅ Connect to backend hosted on Railway, not Netlify
+    const newSocket = io("https://buzzsway-server-production.up.railway.app", {
       withCredentials: true,
+      transports: ["websocket"], // ✅ Force WebSocket to avoid 404s
     });
 
     setSocket(newSocket);

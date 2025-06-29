@@ -11,8 +11,7 @@ const ProfilePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const backendUrl =
-    process.env.REACT_APP_BACKEND_URL || "https://buzzsway.netlify.app";
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
 
   const [profile, setProfile] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);

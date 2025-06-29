@@ -7,7 +7,6 @@ export const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
-  // On mount, check for user from cookie
   useEffect(() => {
     const checkAuth = async () => {
       const userCookie = Cookies.get("user");
@@ -30,27 +29,24 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (credentials) => {
     const res = await API.post("/auth/login", credentials);
-
-    const { user, token } = res.data; // Expecting token from backend
+    const { user, token } = res.data;
     setUser(user);
-
     Cookies.set("user", JSON.stringify(user), { expires: 7 });
-    Cookies.set("token", token, { expires: 7 }); // ✅ Store token in cookie
+    Cookies.set("token", token, { expires: 7 });
   };
 
   const register = async (data) => {
     const res = await API.post("/auth/register", data);
-
-    const { user, token } = res.data; // Expecting token from backend
+    const { user, token } = res.data;
     setUser(user);
-
     Cookies.set("user", JSON.stringify(user), { expires: 7 });
-    Cookies.set("token", token, { expires: 7 }); // ✅ Store token
+    Cookies.set("token", token, { expires: 7 });
   };
 
-  const logout = async () => {
+  const logout = () => {
     setUser(null);
     Cookies.remove("user");
+    Cookies.remove("token");
   };
 
   return (

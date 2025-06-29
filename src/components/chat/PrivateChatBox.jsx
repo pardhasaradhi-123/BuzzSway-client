@@ -64,9 +64,8 @@ const PrivateChatBox = ({ dmUser }) => {
       createdAt: new Date().toISOString(),
     };
 
-    socket.emit("send-private-msg", message);
-    setMessages((prev) => [...prev, message]);
-    setNewMsg("");
+    socket.emit("send-private-msg", message); // Let backend echo it back
+    setNewMsg(""); // Don't update messages here
   };
 
   return (
@@ -87,7 +86,7 @@ const PrivateChatBox = ({ dmUser }) => {
 
           return (
             <div
-              key={msg._id}
+              key={msg._id || msg.createdAt + msg.content}
               className={`my-1 flex ${
                 isOwnMsg ? "justify-end" : "justify-start"
               }`}

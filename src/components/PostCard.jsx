@@ -69,13 +69,13 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
         >
           {isVideo ? (
             <video
-              src={`${backendUrl}${post.image}`}
+              src={`${post.image}`}
               className="w-full max-h-72 object-cover rounded-md pointer-events-none"
               muted
             />
           ) : (
             <img
-              src={`${backendUrl}${post.image}`}
+              src={`${post.image}`}
               alt="Post"
               className="w-full object-cover rounded-md"
             />

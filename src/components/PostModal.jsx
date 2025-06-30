@@ -13,8 +13,6 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
 
   const isOwner = currentUser?.id === post?.user?._id;
 
-  const backendUrl = "https://buzzsway-server-production.up.railway.app";
-
   const handleDelete = async () => {
     try {
       await API.delete(`/posts/${post.user._id}/delete/${post._id}`);
@@ -134,13 +132,13 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
         {/* Post Media (Image or Video) */}
         {isVideo ? (
           <video
-            src={`${backendUrl}${post.image}`}
+            src={`${post.image}`}
             controls
             className="w-full max-h-[400px] rounded-t-2xl"
           />
         ) : (
           <img
-            src={`${backendUrl}${post.image}`}
+            src={`${post.image}`}
             alt="Full Post"
             className="w-full object-cover max-h-[400px] rounded-t-2xl"
           />

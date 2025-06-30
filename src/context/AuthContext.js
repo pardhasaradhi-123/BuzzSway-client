@@ -49,6 +49,11 @@ export const AuthProvider = ({ children }) => {
   };
 
   const logout = async () => {
+    try {
+      await API.get("/auth/logout"); // ✅ call backend to clear HTTP-only cookie
+    } catch (err) {
+      console.error("Logout failed", err);
+    }
     setUser(null);
     Cookies.remove("user");
     Cookies.remove("token");

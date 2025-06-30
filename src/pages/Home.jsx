@@ -18,6 +18,15 @@ const Home = () => {
     process.env.REACT_APP_BACKEND_URL ||
     "https://buzzsway-server-production.up.railway.app";
 
+  // Format the image URL safely
+  const formatImageUrl = (path) => {
+    if (!path) return "";
+    return path.startsWith("http")
+      ? path
+      : `${backendUrl}${path.startsWith("/") ? "" : "/"}${path}`;
+  };
+
+  // Fetch all posts
   const fetchPosts = async () => {
     try {
       setLoading(true);
@@ -27,7 +36,7 @@ const Home = () => {
       );
       const normalized = sorted.map((post) => ({
         ...post,
-        image: `${backendUrl}${post.image}`,
+        image: formatImageUrl(post.image),
       }));
       setPosts(normalized);
     } catch (err) {
@@ -41,10 +50,11 @@ const Home = () => {
     fetchPosts();
   }, []);
 
+  // Update post in state
   const handlePostUpdate = (updatedPost) => {
     const updated = {
       ...updatedPost,
-      image: `${backendUrl}${updatedPost.image}`,
+      image: formatImageUrl(updatedPost.image),
     };
     setPosts((prevPosts) => [
       updated,
@@ -52,16 +62,10 @@ const Home = () => {
     ]);
   };
 
+  // Remove post from state
   const handlePostDeleted = (deletedId) => {
     setPosts((prev) => prev.filter((p) => p._id !== deletedId));
     setSelectedPost(null);
-  };
-
-  const formatImageUrl = (path) => {
-    if (!path) return "";
-    return path.startsWith("http")
-      ? path
-      : `${backendUrl}${path.startsWith("/") ? "" : "/"}${path}`;
   };
 
   const handlePostClick = (post) => {

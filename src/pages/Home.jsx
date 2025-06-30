@@ -21,11 +21,21 @@ const Home = () => {
   // ✅ Fix mixed content by normalizing image URLs
   const normalizeImageUrl = (imgPath) => {
     if (!imgPath) return "";
-    if (imgPath.startsWith("http://localhost:5000")) {
-      return backendUrl + new URL(imgPath).pathname;
+    try {
+      const backendUrl =
+        process.env.REACT_APP_BACKEND_URL ||
+        "https://buzzsway-server-production.up.railway.app";
+
+      const url = new URL(imgPath, backendUrl);
+      if (url.hostname === "localhost") {
+        // Replace localhost with production
+        return backendUrl + url.pathname;
+      }
+      return url.href;
+    } catch (err) {
+      // Fallback if imgPath is relative
+      return `${backendUrl}${imgPath}`;
     }
-    if (imgPath.startsWith("http")) return imgPath;
-    return `${backendUrl}${imgPath}`;
   };
 
   const fetchPosts = async () => {

@@ -2,6 +2,7 @@ import { timeAgo } from "../utils/timeAgo";
 import { FiHeart, FiMessageCircle } from "react-icons/fi";
 import { useState } from "react";
 import API from "../utils/axios";
+import img from "../assets/it's me.jpg";
 
 const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
   const [likes, setLikes] = useState(post.likes || []);
@@ -73,7 +74,8 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
             />
           ) : (
             <img
-              src={`${post.image}`}
+              // src={`${post.image}`}
+              src={img}
               alt="Post"
               className="w-full object-cover rounded-md"
             />

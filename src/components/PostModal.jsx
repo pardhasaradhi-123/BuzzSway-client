@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { FaHeart, FaRegHeart, FaRegComment } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import API from "../utils/axios";
+import img from "../assets/it's me.jpg";
 
 const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
   const [likes, setLikes] = useState(post.likes || []);
@@ -138,7 +139,8 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
           />
         ) : (
           <img
-            src={`${post.image}`}
+            // src={`${post.image}`}
+            src={img}
             alt="Full Post"
             className="w-full object-cover max-h-[400px] rounded-t-2xl"
           />

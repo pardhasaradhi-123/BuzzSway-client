@@ -6,6 +6,7 @@ import PostModal from "../components/PostModal";
 import Lottie from "lottie-react";
 import loadingAnim from "../assets/loading.json";
 import emptyAnim from "../assets/empty.json";
+import img from "../assets/it's me.jpg";
 
 const ProfilePage = () => {
   const { id } = useParams();
@@ -233,7 +234,8 @@ const ProfilePage = () => {
                 </div>
               ) : (
                 <img
-                  src={formatImageUrl(post.image)}
+                  // src={formatImageUrl(post.image)}
+                  src={img}
                   alt={`post-${i}`}
                   className="w-full h-full object-cover hover:scale-105 hover:brightness-110 transition-transform duration-200 ease-in-out cursor-pointer"
                   onClick={() =>

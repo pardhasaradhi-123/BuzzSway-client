@@ -1,5 +1,5 @@
 import { timeAgo } from "../utils/timeAgo";
-import { FiHeart, FiMessageCircle, FiMoreHorizontal } from "react-icons/fi";
+import { FiHeart, FiMessageCircle } from "react-icons/fi";
 import { useState } from "react";
 import API from "../utils/axios";
 
@@ -11,6 +11,16 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
   const backendUrl =
     process.env.REACT_APP_BACKEND_URL ||
     "https://buzzsway-server-production.up.railway.app";
+
+  // ✅ Fix Mixed Content by replacing localhost with backend URL
+  const normalizeImageUrl = (imgPath) => {
+    if (!imgPath) return "";
+    if (imgPath.startsWith("http://localhost:5000")) {
+      return backendUrl + new URL(imgPath).pathname;
+    }
+    if (imgPath.startsWith("http")) return imgPath;
+    return `${backendUrl}${imgPath}`;
+  };
 
   const handleLike = async () => {
     try {
@@ -42,6 +52,7 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
   };
 
   const isVideo = post.image?.match(/\.(mp4|webm|ogg)$/);
+  const imageUrl = normalizeImageUrl(post.image);
 
   return (
     <div className="bg-white shadow-md rounded-2xl p-5 mb-6 transition-all hover:shadow-xl border border-gray-100">
@@ -63,21 +74,21 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
       {/* Caption */}
       <p className="text-gray-800 leading-relaxed mb-4">{post.caption}</p>
 
-      {/* Media: Video or Image */}
+      {/* Media */}
       {post.image && (
         <div
           onClick={onClick}
           className="rounded-lg mb-3 max-h-72 overflow-hidden cursor-pointer"
         >
-          {post.image.match(/\.(mp4|webm|ogg)$/) ? (
+          {isVideo ? (
             <video
-              src={`${backendUrl}${post.image}`}
+              src={imageUrl}
               className="w-full max-h-72 object-cover rounded-md pointer-events-none"
               muted
             />
           ) : (
             <img
-              src={`${backendUrl}${post.image}`}
+              src={imageUrl}
               alt="Post"
               className="w-full object-cover rounded-md"
             />

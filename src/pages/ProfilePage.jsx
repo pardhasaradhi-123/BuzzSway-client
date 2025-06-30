@@ -15,6 +15,16 @@ const ProfilePage = () => {
     process.env.REACT_APP_BACKEND_URL ||
     "https://buzzsway-server-production.up.railway.app";
 
+  // ✅ Normalize any image/video path (replace localhost if needed)
+  const normalizeImageUrl = (imgPath) => {
+    if (!imgPath) return "";
+    if (imgPath.startsWith("http://localhost:5000")) {
+      return backendUrl + new URL(imgPath).pathname;
+    }
+    if (imgPath.startsWith("http")) return imgPath;
+    return `${backendUrl}${imgPath}`;
+  };
+
   const [profile, setProfile] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -102,7 +112,7 @@ const ProfilePage = () => {
       setPostForm({ media: null, caption: "" });
       setPostModalOpen(false);
     } catch (err) {
-      window.alert(err.response.data.message);
+      window.alert(err.response?.data?.message || "Error creating post");
     }
   };
 
@@ -167,9 +177,8 @@ const ProfilePage = () => {
           <p className="mt-4 text-sm text-gray-700 whitespace-pre-line">
             {profile.bio || "🌟 MERN Stack Developer | 📸 BuzzSway Enthusiast"}
           </p>
-
-          {/* Buttons */}
         </div>
+
         <div className="mt-4 flex flex-row gap-2 w-full">
           {isOwnProfile ? (
             <>
@@ -227,27 +236,27 @@ const ProfilePage = () => {
                   onClick={() =>
                     setActivePost({
                       ...post,
-                      image: `${backendUrl}${post.image}`,
+                      image: normalizeImageUrl(post.image),
                       user: { _id: profile._id, username: profile.username },
                     })
                   }
                   className="relative w-full h-full cursor-pointer"
                 >
                   <video
-                    src={`${backendUrl}${post.image}`}
+                    src={normalizeImageUrl(post.image)}
                     controls
                     className="w-full h-full object-cover pointer-events-none"
                   />
                 </div>
               ) : (
                 <img
-                  src={`${backendUrl}${post.image}`}
+                  src={normalizeImageUrl(post.image)}
                   alt={`post-${i}`}
                   className="w-full h-full object-cover hover:scale-105 hover:brightness-110 transition-transform duration-200 ease-in-out cursor-pointer"
                   onClick={() =>
                     setActivePost({
                       ...post,
-                      image: `${backendUrl}${post.image}`,
+                      image: normalizeImageUrl(post.image),
                       user: { _id: profile._id, username: profile.username },
                     })
                   }

@@ -17,6 +17,16 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
     process.env.REACT_APP_BACKEND_URL ||
     "https://buzzsway-server-production.up.railway.app";
 
+  // ✅ Normalize Image or Video URL
+  const normalizeImageUrl = (imgPath) => {
+    if (!imgPath) return "";
+    if (imgPath.startsWith("http://localhost:5000")) {
+      return backendUrl + new URL(imgPath).pathname;
+    }
+    if (imgPath.startsWith("http")) return imgPath;
+    return `${backendUrl}${imgPath}`;
+  };
+
   const handleDelete = async () => {
     try {
       await API.delete(`/posts/${post.user._id}/delete/${post._id}`);
@@ -119,6 +129,10 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
 
   if (!post) return null;
 
+  const ext = post.image?.split(".").pop()?.split("?")[0]?.toLowerCase();
+  const isVideo = ["mp4", "webm", "ogg"].includes(ext);
+  const mediaUrl = normalizeImageUrl(post.image);
+
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 px-4">
       <div className="bg-white rounded-2xl overflow-hidden shadow-lg max-w-md w-full relative">
@@ -131,28 +145,19 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
         </button>
 
         {/* Post Media (Image or Video) */}
-        {(() => {
-          const ext = post.image
-            ?.split(".")
-            .pop()
-            ?.split("?")[0]
-            ?.toLowerCase();
-          const isVideo = ["mp4", "webm", "ogg"].includes(ext);
-
-          return isVideo ? (
-            <video
-              src={`${backendUrl}${post.image}`}
-              controls
-              className="w-full max-h-[400px] rounded-t-2xl"
-            />
-          ) : (
-            <img
-              src={`${backendUrl}${post.image}`}
-              alt="Full Post"
-              className="w-full object-cover max-h-[400px] rounded-t-2xl"
-            />
-          );
-        })()}
+        {isVideo ? (
+          <video
+            src={mediaUrl}
+            controls
+            className="w-full max-h-[400px] rounded-t-2xl"
+          />
+        ) : (
+          <img
+            src={mediaUrl}
+            alt="Full Post"
+            className="w-full object-cover max-h-[400px] rounded-t-2xl"
+          />
+        )}
 
         {/* Caption */}
         <div className="px-4 pt-3">
@@ -215,7 +220,6 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
           ) : (
             comments.map((cmt, i) => {
               const isAuthor = cmt?.postedBy?.username === currentUser.username;
-
               return (
                 <div key={cmt._id || i} className="mb-2 group relative">
                   <span className="font-medium">

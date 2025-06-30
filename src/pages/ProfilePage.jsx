@@ -212,7 +212,9 @@ const ProfilePage = () => {
                   onClick={() =>
                     setActivePost({
                       ...post,
-                      image: `${backendUrl}${post.image}`,
+                      image: post.image.startsWith("http")
+                        ? post.image
+                        : `${backendUrl}${post.image}`,
                       user: { _id: profile._id, username: profile.username },
                     })
                   }

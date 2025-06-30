@@ -60,7 +60,9 @@ const Home = () => {
   const handlePostClick = (post) => {
     setSelectedPost({
       ...post,
-      image: `${backendUrl}${post.image}`,
+      image: post.image.startsWith("http")
+        ? post.image
+        : `${backendUrl}${post.image}`,
     });
   };
 

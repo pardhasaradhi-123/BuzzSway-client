@@ -25,6 +25,8 @@ const ProfilePage = () => {
   const [postForm, setPostForm] = useState({ image: "", caption: "" });
   const [activePost, setActivePost] = useState(null);
 
+  const backendUrl = "https://buzzsway-server-production.up.railway.app";
+
   const loggedInUser = useMemo(() => {
     try {
       return JSON.parse(Cookies.get("user") || "{}");
@@ -178,18 +180,16 @@ const ProfilePage = () => {
               </button>
             </>
           ) : (
-            <>
-              <button
-                onClick={handleFollow}
-                className={`${
-                  isFollowing
-                    ? "bg-gray-300 hover:bg-gray-400 text-black"
-                    : "bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white hover:opacity-90"
-                } px-4 py-2 rounded-md w-full sm:w-auto`}
-              >
-                {isFollowing ? "Unfollow" : "Follow"}
-              </button>
-            </>
+            <button
+              onClick={handleFollow}
+              className={`${
+                isFollowing
+                  ? "bg-gray-300 hover:bg-gray-400 text-black"
+                  : "bg-gradient-to-r from-purple-500 via-pink-500 to-orange-400 text-white hover:opacity-90"
+              } px-4 py-2 rounded-md w-full sm:w-auto`}
+            >
+              {isFollowing ? "Unfollow" : "Follow"}
+            </button>
           )}
         </div>
       </div>
@@ -212,27 +212,27 @@ const ProfilePage = () => {
                   onClick={() =>
                     setActivePost({
                       ...post,
-                      image: `https://buzzsway-server-production.up.railway.app${post.image}`,
+                      image: `${backendUrl}${post.image}`,
                       user: { _id: profile._id, username: profile.username },
                     })
                   }
                   className="relative w-full h-full cursor-pointer"
                 >
                   <video
-                    src={`https://buzzsway-server-production.up.railway.app${post.image}`}
+                    src={`${backendUrl}${post.image}`}
                     controls
                     className="w-full h-full object-cover pointer-events-none"
                   />
                 </div>
               ) : (
                 <img
-                  src={`https://buzzsway-server-production.up.railway.app${post.image}`}
+                  src={`${backendUrl}${post.image}`}
                   alt={`post-${i}`}
                   className="w-full h-full object-cover hover:scale-105 hover:brightness-110 transition-transform duration-200 ease-in-out cursor-pointer"
                   onClick={() =>
                     setActivePost({
                       ...post,
-                      image: `https://buzzsway-server-production.up.railway.app${post.image}`,
+                      image: `${backendUrl}${post.image}`,
                       user: { _id: profile._id, username: profile.username },
                     })
                   }

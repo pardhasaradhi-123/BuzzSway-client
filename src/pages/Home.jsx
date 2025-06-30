@@ -18,26 +18,6 @@ const Home = () => {
     process.env.REACT_APP_BACKEND_URL ||
     "https://buzzsway-server-production.up.railway.app";
 
-  // ✅ Fix mixed content by normalizing image URLs
-  const normalizeImageUrl = (imgPath) => {
-    if (!imgPath) return "";
-    try {
-      const backendUrl =
-        process.env.REACT_APP_BACKEND_URL ||
-        "https://buzzsway-server-production.up.railway.app";
-
-      const url = new URL(imgPath, backendUrl);
-      if (url.hostname === "localhost") {
-        // Replace localhost with production
-        return backendUrl + url.pathname;
-      }
-      return url.href;
-    } catch (err) {
-      // Fallback if imgPath is relative
-      return `${backendUrl}${imgPath}`;
-    }
-  };
-
   const fetchPosts = async () => {
     try {
       setLoading(true);
@@ -45,10 +25,9 @@ const Home = () => {
       const sorted = res.data.sort(
         (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
       );
-      // ✅ Normalize each post's image URL before setting
       const normalized = sorted.map((post) => ({
         ...post,
-        image: `https://buzzsway-server-production.up.railway.app${post.image}`,
+        image: `${backendUrl}${post.image}`,
       }));
       setPosts(normalized);
     } catch (err) {
@@ -63,12 +42,12 @@ const Home = () => {
   }, []);
 
   const handlePostUpdate = (updatedPost) => {
-    const normalized = {
+    const updated = {
       ...updatedPost,
-      image: normalizeImageUrl(updatedPost.image),
+      image: `${backendUrl}${updatedPost.image}`,
     };
     setPosts((prevPosts) => [
-      normalized,
+      updated,
       ...prevPosts.filter((p) => p._id !== updatedPost._id),
     ]);
   };
@@ -81,7 +60,7 @@ const Home = () => {
   const handlePostClick = (post) => {
     setSelectedPost({
       ...post,
-      image: `https://buzzsway-server-production.up.railway.app${post.image}`,
+      image: `${backendUrl}${post.image}`,
     });
   };
 

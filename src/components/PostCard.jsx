@@ -8,6 +8,8 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
   const [liked, setLiked] = useState(post.likes?.includes(currentUser?.id));
   const [likeLoading, setLikeLoading] = useState(false);
 
+  const backendUrl = "https://buzzsway-server-production.up.railway.app";
+
   const handleLike = async () => {
     try {
       setLikeLoading(true);
@@ -67,13 +69,13 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
         >
           {isVideo ? (
             <video
-              src={`https://buzzsway-server-production.up.railway.app${post.image}`}
+              src={`${backendUrl}${post.image}`}
               className="w-full max-h-72 object-cover rounded-md pointer-events-none"
               muted
             />
           ) : (
             <img
-              src={`https://buzzsway-server-production.up.railway.app${post.image}`}
+              src={`${backendUrl}${post.image}`}
               alt="Post"
               className="w-full object-cover rounded-md"
             />

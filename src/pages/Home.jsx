@@ -57,12 +57,17 @@ const Home = () => {
     setSelectedPost(null);
   };
 
+  const formatImageUrl = (path) => {
+    if (!path) return "";
+    return path.startsWith("http")
+      ? path
+      : `${backendUrl}${path.startsWith("/") ? "" : "/"}${path}`;
+  };
+
   const handlePostClick = (post) => {
     setSelectedPost({
       ...post,
-      image: post.image.startsWith("http")
-        ? post.image
-        : `${backendUrl}${post.image}`,
+      image: formatImageUrl(post.image),
     });
   };
 

@@ -124,6 +124,13 @@ const ProfilePage = () => {
     }
   };
 
+  const formatImageUrl = (path) => {
+    if (!path) return "";
+    return path.startsWith("http")
+      ? path
+      : `${backendUrl}${path.startsWith("/") ? "" : "/"}${path}`;
+  };
+
   if (!profile) return <p className="pt-24 px-4">Loading...</p>;
 
   return (
@@ -212,29 +219,27 @@ const ProfilePage = () => {
                   onClick={() =>
                     setActivePost({
                       ...post,
-                      image: post.image.startsWith("http")
-                        ? post.image
-                        : `${backendUrl}${post.image}`,
+                      image: formatImageUrl(post.image),
                       user: { _id: profile._id, username: profile.username },
                     })
                   }
                   className="relative w-full h-full cursor-pointer"
                 >
                   <video
-                    src={`${backendUrl}${post.image}`}
+                    src={formatImageUrl(post.image)}
                     controls
                     className="w-full h-full object-cover pointer-events-none"
                   />
                 </div>
               ) : (
                 <img
-                  src={`${backendUrl}${post.image}`}
+                  src={formatImageUrl(post.image)}
                   alt={`post-${i}`}
                   className="w-full h-full object-cover hover:scale-105 hover:brightness-110 transition-transform duration-200 ease-in-out cursor-pointer"
                   onClick={() =>
                     setActivePost({
                       ...post,
-                      image: `${backendUrl}${post.image}`,
+                      image: formatImageUrl(post.image),
                       user: { _id: profile._id, username: profile.username },
                     })
                   }

@@ -8,30 +8,6 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
   const [liked, setLiked] = useState(post.likes?.includes(currentUser?.id));
   const [likeLoading, setLikeLoading] = useState(false);
 
-  const backendUrl =
-    process.env.REACT_APP_BACKEND_URL ||
-    "https://buzzsway-server-production.up.railway.app";
-
-  // ✅ Fix Mixed Content by replacing localhost with backend URL
-  const normalizeImageUrl = (imgPath) => {
-    if (!imgPath) return "";
-    try {
-      const backendUrl =
-        process.env.REACT_APP_BACKEND_URL ||
-        "https://buzzsway-server-production.up.railway.app";
-
-      const url = new URL(imgPath, backendUrl);
-      if (url.hostname === "localhost") {
-        // Replace localhost with production
-        return backendUrl + url.pathname;
-      }
-      return url.href;
-    } catch (err) {
-      // Fallback if imgPath is relative
-      return `${backendUrl}${imgPath}`;
-    }
-  };
-
   const handleLike = async () => {
     try {
       setLikeLoading(true);
@@ -62,7 +38,6 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
   };
 
   const isVideo = post.image?.match(/\.(mp4|webm|ogg)$/);
-  const imageUrl = normalizeImageUrl(post.image);
 
   return (
     <div className="bg-white shadow-md rounded-2xl p-5 mb-6 transition-all hover:shadow-xl border border-gray-100">
@@ -92,13 +67,13 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
         >
           {isVideo ? (
             <video
-              src={imageUrl}
+              src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
               className="w-full max-h-72 object-cover rounded-md pointer-events-none"
               muted
             />
           ) : (
             <img
-              src={imageUrl}
+              src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
               alt="Post"
               className="w-full object-cover rounded-md"
             />

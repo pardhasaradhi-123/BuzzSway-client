@@ -11,30 +11,6 @@ const ProfilePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const backendUrl =
-    process.env.REACT_APP_BACKEND_URL ||
-    "https://buzzsway-server-production.up.railway.app";
-
-  // ✅ Normalize any image/video path (replace localhost if needed)
-  const normalizeImageUrl = (imgPath) => {
-    if (!imgPath) return "";
-    try {
-      const backendUrl =
-        process.env.REACT_APP_BACKEND_URL ||
-        "https://buzzsway-server-production.up.railway.app";
-
-      const url = new URL(imgPath, backendUrl);
-      if (url.hostname === "localhost") {
-        // Replace localhost with production
-        return backendUrl + url.pathname;
-      }
-      return url.href;
-    } catch (err) {
-      // Fallback if imgPath is relative
-      return `${backendUrl}${imgPath}`;
-    }
-  };
-
   const [profile, setProfile] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
   const [formData, setFormData] = useState({
@@ -146,10 +122,6 @@ const ProfilePage = () => {
     }
   };
 
-  const handleMessage = () => {
-    navigate(`/messages/${profile.username}`);
-  };
-
   if (!profile) return <p className="pt-24 px-4">Loading...</p>;
 
   return (
@@ -217,12 +189,6 @@ const ProfilePage = () => {
               >
                 {isFollowing ? "Unfollow" : "Follow"}
               </button>
-              <button
-                onClick={handleMessage}
-                className="bg-gray-200 hover:bg-gray-300 px-4 py-2 rounded-md w-full sm:w-auto"
-              >
-                Message
-              </button>
             </>
           )}
         </div>
@@ -246,27 +212,27 @@ const ProfilePage = () => {
                   onClick={() =>
                     setActivePost({
                       ...post,
-                      image: normalizeImageUrl(post.image),
+                      image: `https://buzzsway-server-production.up.railway.app/${post.image}`,
                       user: { _id: profile._id, username: profile.username },
                     })
                   }
                   className="relative w-full h-full cursor-pointer"
                 >
                   <video
-                    src={normalizeImageUrl(post.image)}
+                    src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
                     controls
                     className="w-full h-full object-cover pointer-events-none"
                   />
                 </div>
               ) : (
                 <img
-                  src={normalizeImageUrl(post.image)}
+                  src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
                   alt={`post-${i}`}
                   className="w-full h-full object-cover hover:scale-105 hover:brightness-110 transition-transform duration-200 ease-in-out cursor-pointer"
                   onClick={() =>
                     setActivePost({
                       ...post,
-                      image: normalizeImageUrl(post.image),
+                      image: `https://buzzsway-server-production.up.railway.app/${post.image}`,
                       user: { _id: profile._id, username: profile.username },
                     })
                   }

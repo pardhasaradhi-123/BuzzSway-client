@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { FaHeart, FaRegHeart, FaRegComment, FaTrash } from "react-icons/fa";
+import { FaHeart, FaRegHeart, FaRegComment } from "react-icons/fa";
 import { RxCross2 } from "react-icons/rx";
 import API from "../utils/axios";
 
@@ -12,30 +12,6 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
   const [loadingComments, setLoadingComments] = useState(true);
 
   const isOwner = currentUser?.id === post?.user?._id;
-
-  const backendUrl =
-    process.env.REACT_APP_BACKEND_URL ||
-    "https://buzzsway-server-production.up.railway.app";
-
-  // ✅ Normalize Image or Video URL
-  const normalizeImageUrl = (imgPath) => {
-    if (!imgPath) return "";
-    try {
-      const backendUrl =
-        process.env.REACT_APP_BACKEND_URL ||
-        "https://buzzsway-server-production.up.railway.app";
-
-      const url = new URL(imgPath, backendUrl);
-      if (url.hostname === "localhost") {
-        // Replace localhost with production
-        return backendUrl + url.pathname;
-      }
-      return url.href;
-    } catch (err) {
-      // Fallback if imgPath is relative
-      return `${backendUrl}${imgPath}`;
-    }
-  };
 
   const handleDelete = async () => {
     try {
@@ -141,7 +117,6 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
 
   const ext = post.image?.split(".").pop()?.split("?")[0]?.toLowerCase();
   const isVideo = ["mp4", "webm", "ogg"].includes(ext);
-  const mediaUrl = normalizeImageUrl(post.image);
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 px-4">
@@ -157,13 +132,13 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
         {/* Post Media (Image or Video) */}
         {isVideo ? (
           <video
-            src={mediaUrl}
+            src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
             controls
             className="w-full max-h-[400px] rounded-t-2xl"
           />
         ) : (
           <img
-            src={mediaUrl}
+            src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
             alt="Full Post"
             className="w-full object-cover max-h-[400px] rounded-t-2xl"
           />

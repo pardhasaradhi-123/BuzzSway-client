@@ -212,27 +212,27 @@ const ProfilePage = () => {
                   onClick={() =>
                     setActivePost({
                       ...post,
-                      image: `https://buzzsway-server-production.up.railway.app/${post.image}`,
+                      image: `https://buzzsway-server-production.up.railway.app${post.image}`,
                       user: { _id: profile._id, username: profile.username },
                     })
                   }
                   className="relative w-full h-full cursor-pointer"
                 >
                   <video
-                    src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
+                    src={`https://buzzsway-server-production.up.railway.app${post.image}`}
                     controls
                     className="w-full h-full object-cover pointer-events-none"
                   />
                 </div>
               ) : (
                 <img
-                  src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
+                  src={`https://buzzsway-server-production.up.railway.app${post.image}`}
                   alt={`post-${i}`}
                   className="w-full h-full object-cover hover:scale-105 hover:brightness-110 transition-transform duration-200 ease-in-out cursor-pointer"
                   onClick={() =>
                     setActivePost({
                       ...post,
-                      image: `https://buzzsway-server-production.up.railway.app/${post.image}`,
+                      image: `https://buzzsway-server-production.up.railway.app${post.image}`,
                       user: { _id: profile._id, username: profile.username },
                     })
                   }

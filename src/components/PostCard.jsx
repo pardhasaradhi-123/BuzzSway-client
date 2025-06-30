@@ -67,13 +67,13 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
         >
           {isVideo ? (
             <video
-              src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
+              src={`https://buzzsway-server-production.up.railway.app${post.image}`}
               className="w-full max-h-72 object-cover rounded-md pointer-events-none"
               muted
             />
           ) : (
             <img
-              src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
+              src={`https://buzzsway-server-production.up.railway.app${post.image}`}
               alt="Post"
               className="w-full object-cover rounded-md"
             />

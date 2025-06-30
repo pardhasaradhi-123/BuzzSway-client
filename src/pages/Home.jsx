@@ -48,7 +48,7 @@ const Home = () => {
       // ✅ Normalize each post's image URL before setting
       const normalized = sorted.map((post) => ({
         ...post,
-        image: `https://buzzsway-server-production.up.railway.app/${post.image}`,
+        image: `https://buzzsway-server-production.up.railway.app${post.image}`,
       }));
       setPosts(normalized);
     } catch (err) {
@@ -81,7 +81,7 @@ const Home = () => {
   const handlePostClick = (post) => {
     setSelectedPost({
       ...post,
-      image: `https://buzzsway-server-production.up.railway.app/${post.image}`,
+      image: `https://buzzsway-server-production.up.railway.app${post.image}`,
     });
   };
 

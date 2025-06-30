@@ -132,13 +132,13 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
         {/* Post Media (Image or Video) */}
         {isVideo ? (
           <video
-            src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
+            src={`https://buzzsway-server-production.up.railway.app${post.image}`}
             controls
             className="w-full max-h-[400px] rounded-t-2xl"
           />
         ) : (
           <img
-            src={`https://buzzsway-server-production.up.railway.app/${post.image}`}
+            src={`https://buzzsway-server-production.up.railway.app${post.image}`}
             alt="Full Post"
             className="w-full object-cover max-h-[400px] rounded-t-2xl"
           />

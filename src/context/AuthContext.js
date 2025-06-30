@@ -51,6 +51,7 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     setUser(null);
     Cookies.remove("user");
+    Cookies.remove("token");
   };
 
   return (

@@ -14,7 +14,9 @@ const Home = () => {
 
   const { user: currentUser } = useContext(AuthContext);
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendUrl =
+    process.env.REACT_APP_BACKEND_URL ||
+    "https://buzzsway-server-production.up.railway.app";
 
   const fetchPosts = async () => {
     try {

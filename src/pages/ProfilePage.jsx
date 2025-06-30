@@ -11,8 +11,9 @@ const ProfilePage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
-  console.log("Backend URL is:", process.env.REACT_APP_BACKEND_URL);
+  const backendUrl =
+    process.env.REACT_APP_BACKEND_URL ||
+    "https://buzzsway-server-production.up.railway.app";
 
   const [profile, setProfile] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);

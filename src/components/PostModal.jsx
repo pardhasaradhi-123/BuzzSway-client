@@ -13,7 +13,9 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
 
   const isOwner = currentUser?.id === post?.user?._id;
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendUrl =
+    process.env.REACT_APP_BACKEND_URL ||
+    "https://buzzsway-server-production.up.railway.app";
 
   const handleDelete = async () => {
     try {

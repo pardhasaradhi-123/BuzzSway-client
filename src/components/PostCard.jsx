@@ -8,7 +8,9 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
   const [liked, setLiked] = useState(post.likes?.includes(currentUser?.id));
   const [likeLoading, setLikeLoading] = useState(false);
 
-  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  const backendUrl =
+    process.env.REACT_APP_BACKEND_URL ||
+    "https://buzzsway-server-production.up.railway.app";
 
   const handleLike = async () => {
     try {

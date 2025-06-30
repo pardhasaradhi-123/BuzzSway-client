@@ -69,13 +69,13 @@ const PostCard = ({ post, currentUser, onPostUpdate, onClick }) => {
         >
           {post.image.match(/\.(mp4|webm|ogg)$/) ? (
             <video
-              src={`${backendUrl}${post.image}`}
+              src={`${backendUrl}${`${backendUrl}${post.image}`}`}
               className="w-full max-h-72 object-cover rounded-md pointer-events-none"
               muted
             />
           ) : (
             <img
-              src={`${backendUrl}${post.image}`}
+              src={`${backendUrl}${`${backendUrl}${post.image}`}`}
               alt="Post"
               className="w-full object-cover rounded-md"
             />

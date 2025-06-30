@@ -13,6 +13,8 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
 
   const isOwner = currentUser?.id === post?.user?._id;
 
+  const backendUrl = process.env.REACT_APP_BACKEND_URL;
+
   const handleDelete = async () => {
     try {
       await API.delete(`/posts/${post.user._id}/delete/${post._id}`);
@@ -137,13 +139,13 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
 
           return isVideo ? (
             <video
-              src={post.image}
+              src={`${backendUrl}${post.image}`}
               controls
               className="w-full max-h-[400px] rounded-t-2xl"
             />
           ) : (
             <img
-              src={post.image}
+              src={`${backendUrl}${post.image}`}
               alt="Full Post"
               className="w-full object-cover max-h-[400px] rounded-t-2xl"
             />
@@ -197,7 +199,6 @@ const PostModal = ({ post, onClose, currentUser, onPostDeleted }) => {
                     Delete this post
                   </button>
                 )}
-                
               </div>
             )}
           </div>

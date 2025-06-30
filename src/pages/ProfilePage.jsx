@@ -231,6 +231,7 @@ const ProfilePage = () => {
                   }
                   className="relative w-full h-full cursor-pointer"
                 >
+                  {`${backendUrl}${post.image}`}
                   <video
                     src={`${backendUrl}${post.image}`}
                     controls

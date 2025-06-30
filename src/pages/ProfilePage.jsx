@@ -12,6 +12,7 @@ const ProfilePage = () => {
   const navigate = useNavigate();
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL;
+  console.log("Backend URL is:", process.env.REACT_APP_BACKEND_URL);
 
   const [profile, setProfile] = useState(null);
   const [isEditModalOpen, setEditModalOpen] = useState(false);
